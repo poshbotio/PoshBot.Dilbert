@@ -25,12 +25,25 @@ To install the plugin from within PoshBot:
 ## Usage
 ```
 !dilbert
-CHANGEME
+http://assets.amuniversal.com/4147e5d0c6480135071f005056a9545d
 ```
 
 ```
 !dilbert -date 2015-07-04
-CHANGEME
+http://assets.amuniversal.com/f8cda390f0270132e9fb005056a9545d
+```
+
+```
+!dilbert -date 2015-07-04 -alttext
+http://assets.amuniversal.com/f8cda390f0270132e9fb005056a9545d
+>One Missile - Dilbert by Scott Adams
+```
+
+```
+!dilbert -date 2015-07-04 -alttext -transcript
+http://assets.amuniversal.com/f8cda390f0270132e9fb005056a9545d
+>One Missile - Dilbert by Scott Adams
+>G-Man 1: One of our drones found the fugitive hacker Dilbert in a remote forest. He ate a poisonous berry and will be dead in minutes. Can I light him up for practice? G-Man 2: One missile. They're pricey.
 ```
 
 [appveyor-badge]: https://ci.appveyor.com/api/projects/status/4r9969ao2s85a56h?svg=true
