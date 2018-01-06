@@ -1,5 +1,4 @@
 
-
 [cmdletbinding(DefaultParameterSetName = 'task')]
 param(
     [parameter(ParameterSetName = 'task', Position = 0)]
@@ -17,13 +16,16 @@ if (-not (Get-Module -Name PSDepend -ListAvailable)) {
 }
 Import-Module -Name PSDepend -ErrorAction Stop
 Invoke-PSDepend -Path .\requirements.psd1 -Install -Import -Force > $null
+if (-not (Get-Module -Name BuildHelpers -ListAvailable)) {
+    Install-Module -Name BuildHelpers -AllowClobber
+}
+Import-Module -Name BuildHelpers
 
 if ($PSBoundParameters.ContainsKey('help')) {
     Get-PSakeScriptTasks -buildFile "$PSScriptRoot\psake.ps1" |
         Format-Table -Property Name, Description, Alias, DependsOn
 } else {
     Set-BuildEnvironment -Force
-
     Invoke-psake -buildFile "$PSScriptRoot\psake.ps1" -taskList $Task -nologo
     exit ( [int]( -not $psake.build_success ) )
 }
