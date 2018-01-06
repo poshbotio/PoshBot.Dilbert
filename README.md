@@ -33,7 +33,7 @@ CHANGEME
 CHANGEME
 ```
 
-[appveyor-badge]: https://ci.appveyor.com/api/projects/status/eui6lam92efc5n8k?svg=true
+[appveyor-badge]: https://ci.appveyor.com/api/projects/status/4r9969ao2s85a56h?svg=true
 [appveyor-build]: https://ci.appveyor.com/project/devblackops/poshbot-dilbert
 [psgallery-badge]: https://img.shields.io/powershellgallery/dt/poshbot.dilbert.svg
 [psgallery]: https://www.powershellgallery.com/packages/poshbot.dilbert
