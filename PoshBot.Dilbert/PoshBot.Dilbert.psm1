@@ -49,11 +49,17 @@ function Get-Dilbert {
         }
 
         $isoDate = $Date.ToString('yyyy-MM-dd')
-        $uri = "http://dilbert.com/strip/$isoDate"
+        $uri = "https://dilbert.com/strip/$isoDate"
         try {
             $html = Invoke-WebRequest -Uri $uri -UseBasicParsing
             $img = @($html.Images | Where-Object {$_.class -like '*img-comic*'})[0]
-            $img.src
+            $imageUri = 'https:{0}' -f $img.src
+            if ($global:PoshbotContext.BackendType -in @('TeamsBackend')) {
+                'https:{0}' -f $img.src
+                "![img]($imageUri)"
+            } else {
+                $imageUri
+            }
             if ($AltText) {
                 $altDecoded = [System.Web.HttpUtility]::HtmlDecode($img.alt.Trim())
                 '>' + $altDecoded
