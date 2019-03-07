@@ -1,3 +1,14 @@
+function Get-RandomDate {
+    param(
+        [datetime] $Start = 0,
+
+        [datetime] $End = [datetime]::Now
+    )
+
+    $days = (New-TimeSpan -Start $Start -End $End).Days
+    $offset = Get-Random -Minimum 0 -Maximum ($days + 1)
+    (Get-Date).AddDays(-$offset).Date
+}
 
 function Get-Dilbert {
     <#
@@ -16,6 +27,10 @@ function Get-Dilbert {
 
         Get the newest comic
     .EXAMPLE
+        !dilbert -random
+
+        Get a random comic
+    .EXAMPLE
         !dilbert -date 2015-07-04
 
         Get the Dilbert comic published on 2015-07-04
@@ -29,9 +44,13 @@ function Get-Dilbert {
         Get the Dislbert comic including the alternate text for the image.
     #>
     [PoshBot.BotCommand(CommandName = 'dilbert')]
-    [cmdletbinding()]
+    [cmdletbinding(DefaultParameterSetName = 'date')]
     param(
+        [parameter(ParameterSetName = 'date')]
         [datetime]$Date = (Get-Date),
+
+        [parameter(ParameterSetName = 'random')]
+        [switch]$Random,
 
         [switch]$AltText,
 
@@ -41,7 +60,13 @@ function Get-Dilbert {
     $ProgressPreference = 'SilentlyContinue'
     Add-Type -AssemblyName System.Web
 
-    if ($Date -ge [datetime]'1989-04-16') {
+    $firstDilbert = [datetime]'1989-04-16'
+
+    if ($Random) {
+        $Date = Get-RandomDate -Start $firstDilbert
+    }
+
+    if ($Date -ge $firstDilbert) {
 
         if ($Date -gt (Get-Date)) {
             Write-Error 'What are you, from the future?'
